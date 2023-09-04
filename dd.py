@@ -22,7 +22,7 @@ class gamewindow:
 
     # class function to increase the counter number everytime the button is clicked
     def add(self):
-        print(self.counter)
+
         x = self.int_entry.get() + self.counter
         self.int_entry.set(x)
         label.config(text=self.int_entry.get())
@@ -79,6 +79,9 @@ allpurchases = [[20, "You bought the double clicker!", 1], [50, "You bought the 
                 [1850, "You bought a really good clicker you should try using it!", 7],
                 [2250, "You bought the powerful amazing super clicker!", 10]]
 
+def open_file(method="r"):
+    global open_f
+    open_f=open("saves_database.txt",f"{method}")
 
 def something():
     global new
@@ -113,16 +116,16 @@ def file_putter():
         if found == False:
             print("save file created")
             count += 1
-            file = open("saves_database.txt", "a")
-            file.writelines(f"{str(inputed)},{len(allpurchases)},{game.int_entry.get()},{game.counter}\n")
-            file.close()
+            open_file("a")
+            open_f.writelines(f"{str(inputed)},{len(allpurchases)},{game.int_entry.get()},{game.counter}\n")
+            open_f.close()
 
             buttons.destroy(), entry1.destroy(), canvas1.destroy()
             shop.button_maker(allpurchases)
 
     buttons.destroy(), entry1.destroy(), canvas1.destroy()
 
-
+# when clicking the exit button the game is saved using this function
 def exit_save():
     notfound = 0
     try:
@@ -131,20 +134,18 @@ def exit_save():
         print("exiting")
         aroot.destroy()
     with open("saves_database.txt", "r+") as openfile:
-
+        # opens the file in read mode to read then delete the old data and put the new data in
         file = openfile.readlines()
-
         for x in file:
             info = x.split(",")
             if new == info[0]:
                 del file[notfound]
                 with open("saves_database.txt", "w") as openfile:
-                    for lines in file:
-                        openfile.write(lines)
+                    for lines in file:openfile.write(lines)
                     openfile.writelines(f"{str(new)},{len(allpurchases)},{game.int_entry.get()},{game.counter}\n")
+                    # destroys the window ending the program
                     aroot.destroy()
-            else:
-                notfound += 1
+            else:notfound += 1
 
 
 # iterates the backround colours
@@ -217,5 +218,16 @@ alert.pack(side=BOTTOM, pady=60)
 # button to change the backround
 backround = Button(aroot, text="Change backround", font=("Arial", 7), command=changer)
 backround.place(anchor=NW)
+
+open_file("r")
+y=open_f.readlines()
+greater=[]
+for x in y:
+    list=x.split(",")
+    numbers=list[2]
+    greater.append(int(numbers))
+maximum=max(greater)
+leaderboard=Label(aroot,text=f"Top player has: {maximum} clicks")
+leaderboard.place(anchor=NW,rely=0.5)
 # looping the whole thing so it keeps running
 aroot.mainloop()
