@@ -185,7 +185,7 @@ game = gamewindow(aroot, allpurchases)
 shop = shopwindow()
 
 buttonnum = len(allpurchases)
-buttons = Button(text="Enter Save File Name \n or \n Create One:", command=something)
+buttons = Button(text="Login \n or \n Signup:", command=something)
 canvas1.create_window(70, 70, window=buttons)
 
 # Adding button for counter
