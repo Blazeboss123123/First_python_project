@@ -5,7 +5,7 @@ from PIL import Image, ImageTk
 # making and Tk window
 aroot = Tk(className="THE CLICKER")
 aroot.geometry("700x700")
-load = Image.open("C:\\Users\prati\\Downloads\\mountain.jpg")
+load = Image.open("mountain.jpg")
 image_back = ImageTk.PhotoImage(load)
 label1 = Label(aroot, image=image_back)
 label1.pack(fill=BOTH, expand=1)
@@ -89,7 +89,7 @@ def something():
 def file_putter():
     global allpurchases, addcounter
 
-    with open("C:\\Users\\prati\\Downloads\\saves_database.txt", "r+") as f:
+    with open("saves_database.txt", "r+") as f:
         x = f.readlines()
         inputed = entry1.get()
         found = False
@@ -113,7 +113,7 @@ def file_putter():
         if found == False:
             print("save file created")
             count += 1
-            file = open("C:\\Users\\prati\\Downloads\\saves_database.txt", "a")
+            file = open("saves_database.txt", "a")
             file.writelines(f"{str(inputed)},{len(allpurchases)},{game.int_entry.get()},{game.counter}\n")
             file.close()
 
@@ -130,7 +130,7 @@ def exit_save():
     except:
         print("exiting")
         aroot.destroy()
-    with open("C:\\Users\\prati\\Downloads\\saves_database.txt", "r+") as openfile:
+    with open("saves_database.txt", "r+") as openfile:
 
         file = openfile.readlines()
 
@@ -138,7 +138,7 @@ def exit_save():
             info = x.split(",")
             if new == info[0]:
                 del file[notfound]
-                with open("C:\\Users\\prati\\Downloads\\saves_database.txt", "w") as openfile:
+                with open("saves_database.txt", "w") as openfile:
                     for lines in file:
                         openfile.write(lines)
                     openfile.writelines(f"{str(new)},{len(allpurchases)},{game.int_entry.get()},{game.counter}\n")
@@ -217,5 +217,5 @@ alert.pack(side=BOTTOM, pady=60)
 # button to change the backround
 backround = Button(aroot, text="Change backround", font=("Arial", 7), command=changer)
 backround.place(anchor=NW)
-# looping the whole thing so it keeps runing
+# looping the whole thing so it keeps running
 aroot.mainloop()
